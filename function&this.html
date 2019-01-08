@@ -1,0 +1,53 @@
+<html>
+    <body>
+        <script type="text/javascript">
+        "use strict"
+            // 通过构造函数 创建类(object)属性
+            function fucConstruction(x){
+                this.obj = x;
+                console.log(`fucConstruction this.obj====>${this.obj}`);
+            }
+            fucConstruction.prototype.rootobj = "rootobj";
+            var a = new fucConstruction('obj');
+            console.log(`obj is a property====>${a.hasOwnProperty('obj')}`);
+            console.log(`obj is fucConstruction property====>${fucConstruction.prototype.hasOwnProperty('obj')}`);
+            console.log(`rootobj is a property====>${a.hasOwnProperty('rootobj')}`);
+            console.log(`rootobj is fucConstruction property====>${fucConstruction.prototype.hasOwnProperty('rootobj')}`);
+            console.log(`a is ====>${typeof a}`);
+            
+
+            // 函数受返回值影响
+            function fucReturnObject(x){
+                this.obj = x;
+                console.log(`fucReturnObject this.obj====>${this.obj}`);
+                return {};
+            }
+            var b = new fucReturnObject('obj');
+            console.log(`obj is b property====>${b.hasOwnProperty('obj')}`);
+            console.log(`obj is fucReturnObject property====>${fucReturnObject.prototype.hasOwnProperty('obj')}`);
+            console.log(`b is ====>${typeof b}`);
+            
+            function fucReturnNull(x){
+                this.obj = x;
+                console.log(`fucReturnNull this.obj====>${this.obj}`);
+                return null;
+            }
+            var c = new fucReturnNull('obj');
+            console.log(`obj is c property====>${c.hasOwnProperty('obj')}`);
+            console.log(`obj is fucReturnNull property====>${fucReturnNull.prototype.hasOwnProperty('obj')}`);
+            console.log(`c is ====>${typeof c}`);
+
+            
+            function fucReturnFunc(x){
+                this.obj = x;
+                console.log(`fucReturnFunc this.obj====>${this.obj}`);
+                return function(){};
+            }
+            var d = new fucReturnFunc('obj');
+            console.log(`obj is d property====>${d.hasOwnProperty('obj')}`);
+            console.log(`obj is fucReturnFunc property====>${fucReturnFunc.prototype.hasOwnProperty('obj')}`);
+            console.log(`d is ====>${typeof d}`);
+
+         </script>
+    </body>
+</html>

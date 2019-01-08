@@ -1,0 +1,70 @@
+<html>
+    <body>
+        <script type="text/javascript">
+        "use strict"
+        //复杂的函数作用域
+        var x = 1;//定义全局变量x
+        //定义了函数参数x，y
+        //当形参y为函数时，定义了形参的函数作用域，形参x，y共享同一个作用域空间
+        function foo1(
+            x, 
+            y = function() { 
+                    console.log(`形参作用域中 变量x====>${x}`);
+                    x = 2;
+                    return x; 
+                }) {
+            console.log(`形参x====>${x}`);
+            var x = 3;
+            console.log(`函数定义变量x====>${x}`);
+            console.log(`形参y====>${y()}`);
+        }
+
+        foo1('foo1') // 3
+        console.log(`全局作用域中 变量x====>${x}`) // 1    
+
+        function foo2(
+            x1, 
+            y = function() { 
+                    console.log(`形参作用域中 变量x====>${x}`);
+                    x = 2;
+                    return x; 
+                }) {
+            console.log(`形参x1====>${x1}`);
+            var x = 3;
+            console.log(`函数定义变量x====>${x}`);
+            console.log(`形参y====>${y()}`);
+        }
+
+        foo2('foo2') // 3
+        console.log(`全局作用域中 变量x====>${x}`) // 1 
+
+        function foo3(
+            x1, 
+            y = function() { 
+                    console.log(`形参作用域中 变量x1====>${x1}`);
+                    x1 = 2;
+                    return x1; 
+                }) {
+            console.log(`形参x1====>${x1}`);
+            //var x1 = 3;
+            //console.log(`函数定义变量x1====>${x1}`);
+            console.log(`形参y====>${y()}`);
+            console.log(`形参x1====>${x1}`);
+        }
+
+        foo3('foo3') // 3
+        
+        //形参作用域区别于函数作用域，不属于同一空间，当定义重名属性后，函数作用域内属性引用关系改变，但形参作用域内属性不变
+        function foo4(x,y=function(){console.log(x)}){
+            console.log(x);
+            y()
+            var x = 1;
+            console.log(x);
+            y()
+        }
+        
+        foo4('foo4');
+
+         </script>
+    </body>
+</html>

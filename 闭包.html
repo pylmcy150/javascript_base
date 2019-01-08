@@ -1,0 +1,47 @@
+<html>
+    <body>
+        <script type="text/javascript">
+        "use strict"
+            console.log(`function define is first====》${reObject}`);
+            console.log(`var define is order====》${a}`);
+
+            var x = 1;
+            function reObject() {
+                return x;
+            }
+            console.log(`scope chain====》${reObject()}`);
+
+            function reNull() {
+                return null;
+            }
+
+            function reUndefined() {
+                //console.log("reUndefined");
+            }
+
+            function reFunction() {
+                var n = 1;
+                return function() { 
+                        console.log(`闭包函数 返回 内部对象n====》${n}`);
+                        // console.log(reFunction);
+                    };
+            }
+
+
+            var a = reObject();
+            console.log(`reObject return====》${a}`);
+            var b = reNull();
+            console.log(`reNull return====》${b}`);
+            var c = reUndefined();
+            console.log(`reUndefined return====》${c}`);
+            var d = reFunction();
+            console.log(`reFunction return====》${d}`);
+            console.log(`reFunction() return====》${d()}`);
+
+            x = 2;
+            var e = reObject();
+            console.log(`scope chain x====》${x}:reObject a====>${a}:reObject e====>${e}`);
+            
+         </script>
+    </body>
+</html>
