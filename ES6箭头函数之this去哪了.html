@@ -1,0 +1,64 @@
+<html>
+    <body>
+        <script type="text/javascript">
+        "use strict"
+        //看清函数内this本质
+        var foo = {
+            x:1,
+            y:function(){
+                console.log(`foo this ===>${this.x}`);
+                this.x = 2;
+                console.log(`foo this ===>${this.x}`);
+            }
+        }
+        console.log(`-----foo.y()-------`)
+        foo.y();
+        console.log(`foo.x ==>${foo.x}`)
+        //foo.y 与this.foo.y本质相同,foo属于全局域中定义的属性,所以foo.y实际调用的是this.foo.y
+        //而y中this表示this指针，受调用方影响，该处实际指向的是this.foo的this
+        //所以当调用foo.y()时，y中this.x操作的都是foo中的x属性
+        console.log(`-----this.foo.y()-------`)
+        this.foo.y();
+        console.log(`this.foo.x ==>${this.foo.x}`)
+        //构造函数本质是创建了对象空间，var f = new foo.y()，表示创建了foo.y对象，并赋值给f，此处f受foo.y返回值影响
+        //此时new foo.y()为object对象，所以y中this.x开始是不存在的，执行this.x=2后才为创建了x属性
+        //该处的x为new foo.y()的属性与foo.x是两码事，而this只是执行构造函数时的临时对象
+        console.log(`-----var f = new foo.y()-------`)
+        var f = new foo.y();
+        console.log(`f.x ===>${f.x}`);
+        console.log(`this.f.x ===>${this.f.x}`);
+        console.log(`-----var r = {x:10,y:null}-------`)
+        var r = {x:10,y:new foo.y()};
+        console.log(`r.x ==>${r.x}`);
+        console.log(`r.y.x ==>${r.y.x}`);
+
+        //搞清楚this的本质后，es6的箭头函数解决了this受调用方影响问题，
+        //其本质类似typescript中编译时重写this，
+        //this.x = 2 ==> var self = this.y;self.x = 2
+        var fuc = {
+            x:1,
+            y:()=>{
+                console.log(`fuc this ===>${this.x}`);
+                this.x = 2;
+                console.log(`fuc this ===>${this.x}`);
+            }
+        }
+        console.log(`-----y:()=>{this.x = 2}-------`)
+        fuc.y();
+        console.log(`fuc.x ===>${fuc.x}`);
+
+        var fuc2 = {
+            x:1,
+            y:function(){
+                var self = this.y;
+                console.log(`fuc2 this ===>${self.x}`);
+                self.x = 2;
+                console.log(`fuc2 this ===>${self.x}`);
+            }
+        }
+        console.log(`-----y:()=>{self.x = 2}-------`)
+        fuc2.y();
+        console.log(`fuc2.x ===>${fuc2.x}`);
+        </script>
+    </body>
+</html>
